@@ -5,6 +5,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      flex: {
+        '2': '1 1 25%',
+        '3': '1 1 33.333%',
+      },
       rotate: {
         '360': '360deg',
       },

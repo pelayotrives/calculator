@@ -1,29 +1,34 @@
 import React from "react";
+const { log } = console;
+const operationArr = ["+", "-", "x", "÷", "DEL"];
+const digitsArr = ["1","2","3","4","5","6","7","8","9"];
 
 export default function Main() {
 
-  const operations = () => {
-    const operationArr = ["+","-","x","÷","DEL"];
-    for (let i = 0; i < 5; i++) {
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" key={i}>{operationArr[i]}</button>
-    }
-  }
-
   return (
-    <div className="Main">
+    <div className="Main max-w-md bg-white rounded-xl">
 
-      <div className="Display">
-        <span>(0)</span> 0
+      <div className="Display bg-zinc-900 rounded-t-lg text-zinc-200 text-right text-4xl pt-12 pb-4 pr-4">
+        <span className="text-lg text-zinc-600">(0)</span> 0
       </div>
 
-      <div className="Operations">
-        {operations()}
+      <div className="Operations flex">
+        {operationArr.map((eachOperation, index) => {
+          return (
+            <button className="flex-1 bg-orange-600 hover:bg-orange-700 appearance-none border-none outline-none text-white text-lg transition-all p-8" key={index}>{eachOperation}</button>
+          );
+        })}
       </div>
 
-      <div className="Digits">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">.</button>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">=</button>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">0</button>
+      <div className="Digits flex flex-wrap">
+        {digitsArr.map((eachDigit, index) => {
+          return (
+            <button className="flex-3 bg-zinc-400 hover:bg-zinc-600 appearance-none border-none outline-none text-white text-lg transition-all p-8" key={index}>{eachDigit}</button>
+          );
+        })}
+        <button className="flex-3 bg-zinc-400 hover:bg-zinc-600 appearance-none border-none outline-none text-white text-lg transition-all p-8">.</button>
+        <button className="flex-3 bg-zinc-400 hover:bg-zinc-600 appearance-none border-none outline-none text-white text-lg transition-all p-8">=</button>
+        <button className="flex-3 bg-zinc-400 hover:bg-zinc-600 appearance-none border-none outline-none text-white text-lg transition-all p-8">0</button>
       </div>
     </div>
   );
