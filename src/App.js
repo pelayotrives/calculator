@@ -1,11 +1,9 @@
 import Main from "./components/Main";
 
-function App() {
+export default function App() {
   return (
-    <div className="App bg-black h-screen">
+    <div className="App">
       <Main />
     </div>
   );
 }
-
-export default App;
