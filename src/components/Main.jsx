@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 const { log } = console;
 const operationArr = ['+', '-', '*', '/', '%'];
 const digitsArr = ['1','2','3','4','5','6','7','8','9'];
@@ -6,25 +6,46 @@ const digitsArr = ['1','2','3','4','5','6','7','8','9'];
 export default function Main() {
 
   const [result, setResult] = useState('');
+  const operatorRef = useRef(null);
 
   const handleClick = (event) => {
-    setResult(result.concat(event.target.value))
+    setResult(result + event.target.value);
+    log(document.querySelectorAll)
+  }
+
+  const resultEvaluation = (event) => {
+    try {
+      setResult(eval(String(result)));
+      log(operatorRef.current.value)
+    }
+    catch {
+      setResult("NaN");
+    }
   }
 
   return (
-    <div className='Main max-w-xs md:max-w-md xl:max-w-lg bg-white rounded-xl shadow-md'>
+    <div className='Main max-w-xs md:max-w-md xl:max-w-lg bg-white rounded-xl'>
 
-      <div className='Display bg-zinc-900 text-zinc-200 rounded-t-lg text-right text-4xl h-24 p-7 tracking-wider'>
-        { result === "" ? <span>0</span> : <span>{result}</span>
-        }
-      </div>
+      { 
+        String(result).length < 25 ?
+        <div className='Display bg-zinc-900 text-zinc-200 rounded-t-lg text-right text-lg md:text-2xl lg:text-3xl tracking-wider h-24 px-4 py-8 lg:p-7'>
+          {
+            result === "" ? <span>0</span> : <span>{result}</span>
+          }
+        </div>
+        : <div className='Display bg-zinc-900 text-zinc-200 rounded-t-lg text-right text-lg md:text-2xl lg:text-3xl tracking-wider h-24 px-4 py-8 lg:p-7'>
+            <span>Input Too Big</span>
+        </div>
+      }
 
       <div className='Operations flex'>
-        {operationArr.map((eachOperation, index) => {
-          return (
-            <button value={eachOperation} onClick={handleClick} className='flex-1 bg-orange-600 hover:bg-orange-700 active:bg-orange-500 appearance-none border-none outline-none text-white text-lg transition-all p-4 md:p-6' key={index}>{eachOperation}</button>
-          );
-        })}
+        {
+          operationArr.map((eachOperation, index) => {
+            return (
+              <button ref={operatorRef} value={eachOperation} onClick={handleClick} className='flex-1 bg-orange-600 hover:bg-orange-700 active:bg-orange-500 appearance-none border-none outline-none text-white text-lg transition-all p-4 md:p-6' key={index}>{eachOperation}</button>
+            );
+          })
+        }
       </div>
 
       <div className='Delete flex'>
@@ -33,14 +54,16 @@ export default function Main() {
       </div>
 
       <div className='Digits flex flex-wrap'>
-        {digitsArr.map((eachDigit, index) => {
+        {
+          digitsArr.map((eachDigit, index) => {
           return (
-            <button value={String(eachDigit)} onClick={handleClick} className='flex-3 bg-zinc-400 hover:bg-zinc-600 active:bg-zinc-700 appearance-none border-none outline-none text-white text-lg transition-all p-4 md:p-8' key={index}>{eachDigit}</button>
+            <button value={eachDigit} onClick={handleClick} className='flex-3 bg-zinc-400 hover:bg-zinc-600 active:bg-zinc-700 appearance-none border-none outline-none text-white text-lg transition-all p-4 md:p-8' key={index}>{eachDigit}</button>
           );
-        })}
+          })
+        }
         <button value={"."} onClick={handleClick} className='flex-3 bg-zinc-400 hover:bg-zinc-600 active:bg-zinc-500 appearance-none border-none outline-none text-white text-lg transition-all p-8'>.</button>
-        <button value={"0"} onClick={handleClick} className='flex-3 bg-zinc-400 hover:bg-zinc-600 active:bg-zinc-500 appearance-none border-none outline-none text-white text-lg transition-all p-8'>0</button>
-        <button className='flex-3 bg-zinc-400 hover:bg-zinc-600 active:bg-zinc-500 appearance-none border-none outline-none text-white text-lg transition-all p-8'>=</button>
+        <button value={0} onClick={handleClick} className='flex-3 bg-zinc-400 hover:bg-zinc-600 active:bg-zinc-500 appearance-none border-none outline-none text-white text-lg transition-all p-8'>0</button>
+        <button onClick={resultEvaluation} className='flex-3 bg-zinc-400 hover:bg-zinc-600 active:bg-zinc-500 appearance-none border-none outline-none text-white text-lg transition-all p-8'>=</button>
       </div>
 
       <div className='Trademark bg-zinc-800 text-zinc-400 rounded-b-lg font-mono text-xs text-center p-3'>
