@@ -12,6 +12,9 @@ module.exports = {
       rotate: {
         '360': '360deg',
       },
+      boxShadow: {
+        'md': '0 35px 60px -15px rgba(85, 85, 85, 0.3)',
+      },
       keyframes: {
         zoom: {
           '0%, 100%': { transform: 'scale(1.1)' },
@@ -29,6 +32,9 @@ module.exports = {
         microzoom: 'microzoom 1.5s ease-in-out infinite',
         alternate: 'alternate 2s ease-in-out infinite alternate',
       }
+    },
+    backgroundImage: {
+      'gradientSVG': "url('../src/assets/gradient.svg')"
     },
     screens: {
       'xsm':'350px',
