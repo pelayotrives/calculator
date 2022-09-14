@@ -22,6 +22,7 @@ export default function Main() {
         );
     }
     catch {
+      alert("There is an error. Try again!")
       setResult("NaN");
     }
   }
