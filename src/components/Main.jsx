@@ -6,17 +6,20 @@ const digitsArr = ['1','2','3','4','5','6','7','8','9'];
 export default function Main() {
 
   const [result, setResult] = useState('');
-  const operatorRef = useRef(null);
 
   const handleClick = (event) => {
     setResult(result + event.target.value);
-    log(document.querySelectorAll)
+    // log(String(result.concat(event.target.value)));
   }
 
   const resultEvaluation = (event) => {
     try {
-      setResult(eval(String(result)));
-      log(operatorRef.current.value)
+      let final = eval(result);
+      setResult(
+        String(final).length > 10 && String(final).includes(".")
+        ? parseFloat(final).toFixed(10)
+        : String(final)
+        );
     }
     catch {
       setResult("NaN");
@@ -42,7 +45,7 @@ export default function Main() {
         {
           operationArr.map((eachOperation, index) => {
             return (
-              <button ref={operatorRef} value={eachOperation} onClick={handleClick} className='flex-1 bg-orange-600 hover:bg-orange-700 active:bg-orange-500 appearance-none border-none outline-none text-white text-lg transition-all p-4 md:p-6' key={index}>{eachOperation}</button>
+              <button value={eachOperation} onClick={handleClick} className='flex-1 bg-orange-600 hover:bg-orange-700 active:bg-orange-500 appearance-none border-none outline-none text-white text-lg transition-all p-4 md:p-6' key={index}>{eachOperation}</button>
             );
           })
         }
